@@ -21,14 +21,32 @@ document.addEventListener('DOMContentLoaded', function () {
                     const phoneCell = newRow.insertCell(2);
                     const phoneLink = document.createElement('a');
                     phoneLink.href = `tel:${columns[2].trim()}`;
-                    phoneLink.textContent = columns[2];
+                    
+                    // Text and icon for phone
+                    phoneLink.innerHTML = `
+                        <span class="phone-text">${columns[2]}</span>
+                        <i class="bi bi-telephone-outbound phone-icon"></i>
+                    `;
                     phoneCell.appendChild(phoneLink);
 
                     const emailCell = newRow.insertCell(3);
                     const emailLink = document.createElement('a');
                     emailLink.href = `mailto:${columns[3].trim()}`;
-                    emailLink.textContent = columns[3];
+                    
+                    // Text and icon for email
+                    emailLink.innerHTML = `
+                        <span class="email-text">${columns[3]}</span>
+                        <i class="bi bi-envelope-at email-icon"></i>
+                    `;
                     emailCell.appendChild(emailLink);
+
+                    const whatsappCell = newRow.insertCell(4);
+                    const whatsappLink = document.createElement('a');
+                    whatsappLink.href = `https://wa.me/${columns[2].trim()}`;
+                    
+                    // WhatsApp icon
+                    whatsappLink.innerHTML = `<i class="bi bi-whatsapp whatsapp-icon"></i>`;
+                    whatsappCell.appendChild(whatsappLink);
                 }
             });
         });
