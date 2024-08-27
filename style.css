@@ -1,15 +1,23 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
 
+* {
+    padding: 0;
+    margin: 0; /* This also removes default margins */
+    box-sizing: border-box;
+}
+
+
 .main{
 
-    width: 100%;
+    width:100vw;
 }
 
 .search-box{
-    width: 100%;
+    
     display: flex;
     justify-content: center;
     align-items: center;
+    width:100vw;
 }
 
 .search-box #searchInput{
