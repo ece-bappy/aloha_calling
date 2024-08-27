@@ -20,7 +20,7 @@
         }
         th, td {
             padding: 10px;
-            text-align: left;
+            text-align: center;
         }
         th {
             background-color: #f4f4f4;
@@ -30,7 +30,7 @@
         }
         /* Hide phone number and email text on small screens */
         @media (max-width: 600px) {
-            .phone-text, .email-text {
+            .phone-text, .email-text, .whatsapp-icon {
                 display: none;
             }
             .phone-icon, .email-icon, .whatsapp-icon {
@@ -42,17 +42,24 @@
             .phone-icon, .email-icon, .whatsapp-icon {
                 display: none;
             }
-            .phone-text, .email-text {
+            .phone-text, .email-text, .whatsapp-icon {
                 display: inline;
             }
         }
     </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Branch Information</h1>
+    <header>
+        
+        <h3>ALOHA Bangladesh</h3>
+        <p>All Branch Coordinator's Number</p>
+    
+    
+    </header>
+    <section class="main">
     <div class="search-box">
-        <label for="searchInput">Search Branch Name: </label>
-        <input type="text" id="searchInput" placeholder="Enter Branch Name">
+        <input type="text" id="searchInput" placeholder="Search A Branch Here">
     </div>
     <table id="dataTable">
         <thead>
@@ -68,7 +75,7 @@
             <!-- Data will be populated here -->
         </tbody>
     </table>
-
+</section>
     <script src="script.js"></script>
 </body>
 </html>
