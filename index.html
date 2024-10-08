@@ -3,79 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Branch Information</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Google Slide Showcase</title>
     <style>
-        body {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
             font-family: Arial, sans-serif;
-            margin: 20px;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+
+        body {
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-        th, td {
-            padding: 10px;
+
+        .container {
             text-align: center;
+            width: 80%;
+            max-width: 1440px;
         }
-        th {
-            background-color: #f4f4f4;
+
+        iframe {
+            width: 100%;
+            height: 839px;
+            border-radius: 10px;
+            border: none;
+            transition: filter 0.3s ease;
+            filter: blur(15px); /* Initially blurry */
         }
-        .search-box {
+
+        .password-input {
             margin-bottom: 20px;
         }
-        /* Hide phone number and email text on small screens */
-        @media (max-width: 600px) {
-            .phone-text, .email-text, .whatsapp-icon {
-                display: none;
-            }
-            .phone-icon, .email-icon, .whatsapp-icon {
-                display: inline;
-            }
+
+        input[type="password"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 250px;
         }
-        /* Show phone number and email text on larger screens */
-        @media (min-width: 601px) {
-            .phone-icon, .email-icon, .whatsapp-icon {
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #fullscreen-toggle {
+            display: none; /* Hidden initially */
+            margin-top: 20px;
+        }
+
+        .fullscreen-button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .fullscreen-button:hover {
+            background-color: #218838;
+        }
+
+        /* Disable print */
+        @media print {
+            body {
                 display: none;
-            }
-            .phone-text, .email-text, .whatsapp-icon {
-                display: inline;
             }
         }
     </style>
-    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
+    <div class="container">
+        <div class="password-input">
+            <input type="password" id="password" placeholder="Enter password">
+            <button onclick="checkPassword()">Submit</button>
+        </div>
         
-        <h3>ALOHA Bangladesh</h3>
-        <p>All Branch Coordinator's Number</p>
-    
-    
-    </header>
-    <section class="main">
-    <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Search A Branch Here">
+        <iframe id="slide-frame" src="https://docs.google.com/presentation/d/e/2PACX-1vR9axjRXmRJ2WXHgtK1VquBaTV61a6-tUdr-VDbiRKhg6jiAfzFWpZR8usfPT9PRynTiHIjTC3Hc9pE/embed?start=false&loop=false&delayms=3000" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+        
+        <div id="fullscreen-toggle">
+            <button class="fullscreen-button" onclick="toggleFullScreen()">Toggle Full Screen</button>
+        </div>
     </div>
-    <table id="dataTable">
-        <thead>
-            <tr>
-                <th>Branch Name</th>
-                <th>Coordinator Name</th>
-                <th>Phone No</th>
-                <th>Email</th>
-                <th>WhatsApp</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Data will be populated here -->
-        </tbody>
-    </table>
-</section>
-    <script src="script.js"></script>
+
+    <script>
+        let isFrameActive = false;
+        let timeout;
+
+        function checkPassword() {
+            const password = document.getElementById("password").value;
+            const frame = document.getElementById("slide-frame");
+
+            if (password === '1234') {
+                frame.style.filter = 'none'; // Remove blur
+                isFrameActive = true;
+                document.getElementById("fullscreen-toggle").style.display = 'block'; // Show full-screen button
+                timeout = setTimeout(() => {
+                    frame.style.filter = 'blur(15px)'; // Reapply blur after 2 hours
+                    isFrameActive = false;
+                    document.getElementById("fullscreen-toggle").style.display = 'none'; // Hide full-screen button
+                }, 2 * 60 * 60 * 1000); // 2 hours in milliseconds
+            } else {
+                alert('Incorrect password');
+            }
+        }
+
+        function toggleFullScreen() {
+            const iframe = document.getElementById("slide-frame");
+
+            if (isFrameActive) {
+                if (!document.fullscreenElement) {
+                    iframe.requestFullscreen().then(() => {
+                        activateLaser(); // Laser activation logic
+                    });
+                } else {
+                    document.exitFullscreen().then(() => {
+                        deactivateLaser(); // Laser deactivation logic
+                    });
+                }
+            }
+        }
+
+        function activateLaser() {
+            console.log("Laser activated");
+            // Add your laser activation logic here
+        }
+
+        function deactivateLaser() {
+            console.log("Laser deactivated");
+            // Add your laser deactivation logic here
+        }
+    </script>
 </body>
 </html>
