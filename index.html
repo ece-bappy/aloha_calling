@@ -3,154 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Google Slide Showcase</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ALOHA!</title>
     <style>
-        * {
+        body {
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
-            background-color: #f4f4f9;
+            background-color: #f4f4f4;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
         }
-
-        .container {
-            text-align: center;
-            width: 80%;
-            max-width: 1440px;
-        }
-
-        iframe {
+        
+        /* Modal Styles */
+        #passwordModal {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 839px;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
             border-radius: 10px;
-            border: none;
-            transition: filter 0.3s ease;
-            filter: blur(15px); /* Initially blurry */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
         }
 
-        .password-input {
-            margin-bottom: 20px;
-        }
-
-        input[type="password"] {
+        .modal-content input {
+            width: 80%;
             padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            margin-top: 15px;
             font-size: 16px;
-            width: 250px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
 
-        button {
+        .modal-content button {
             padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        #fullscreen-toggle {
-            display: none; /* Hidden initially */
             margin-top: 20px;
-        }
-
-        .fullscreen-button {
-            padding: 10px 15px;
             background-color: #28a745;
             color: white;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            border-radius: 5px;
         }
 
-        .fullscreen-button:hover {
+        .modal-content button:hover {
             background-color: #218838;
         }
 
-        /* Disable print */
-        @media print {
-            body {
-                display: none;
-            }
+        /* Slide container */
+        .slide-container {
+            display: none;
+            width: 960px;
+            height: 569px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="password-input">
-            <input type="password" id="password" placeholder="Enter password">
+
+    <!-- Password Modal -->
+    <div id="passwordModal">
+        <div class="modal-content">
+            <h2>Enter OTP</h2>
+            <input type="password" id="passwordInput" placeholder="Enter Password" />
             <button onclick="checkPassword()">Submit</button>
-        </div>
-        
-        <iframe id="slide-frame" src="https://docs.google.com/presentation/d/e/2PACX-1vR9axjRXmRJ2WXHgtK1VquBaTV61a6-tUdr-VDbiRKhg6jiAfzFWpZR8usfPT9PRynTiHIjTC3Hc9pE/embed?start=false&loop=false&delayms=3000" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-        
-        <div id="fullscreen-toggle">
-            <button class="fullscreen-button" onclick="toggleFullScreen()">Toggle Full Screen</button>
         </div>
     </div>
 
+    <!-- Slide Container -->
+    <div class="slide-container" id="slideContainer">
+        <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vR8hYwbNfNedTnoyPS1cI4f8jwgPakR6pt0M6NJpVHQnDz9pjmdL6pl32q_CqtHBGtqzec4hGQXRPxk/embed?start=false&loop=false&delayms=3000" 
+                frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true">
+        </iframe>
+    </div>
+
     <script>
-        let isFrameActive = false;
-        let timeout;
-
         function checkPassword() {
-            const password = document.getElementById("password").value;
-            const frame = document.getElementById("slide-frame");
-
-            if (password === '1234') {
-                frame.style.filter = 'none'; // Remove blur
-                isFrameActive = true;
-                document.getElementById("fullscreen-toggle").style.display = 'block'; // Show full-screen button
-                timeout = setTimeout(() => {
-                    frame.style.filter = 'blur(15px)'; // Reapply blur after 2 hours
-                    isFrameActive = false;
-                    document.getElementById("fullscreen-toggle").style.display = 'none'; // Hide full-screen button
-                }, 2 * 60 * 60 * 1000); // 2 hours in milliseconds
+            const password = document.getElementById("passwordInput").value;
+            if (password === "1212") {
+                document.getElementById("passwordModal").style.display = "none";
+                document.getElementById("slideContainer").style.display = "block";
             } else {
-                alert('Incorrect password');
+                alert("Incorrect password, please try again.");
             }
-        }
-
-        function toggleFullScreen() {
-            const iframe = document.getElementById("slide-frame");
-
-            if (isFrameActive) {
-                if (!document.fullscreenElement) {
-                    iframe.requestFullscreen().then(() => {
-                        activateLaser(); // Laser activation logic
-                    });
-                } else {
-                    document.exitFullscreen().then(() => {
-                        deactivateLaser(); // Laser deactivation logic
-                    });
-                }
-            }
-        }
-
-        function activateLaser() {
-            console.log("Laser activated");
-            // Add your laser activation logic here
-        }
-
-        function deactivateLaser() {
-            console.log("Laser deactivated");
-            // Add your laser deactivation logic here
         }
     </script>
+
 </body>
 </html>
